@@ -5,9 +5,10 @@ const eliminarclose = document.querySelector(".eliminar-close")
 const prenda1 = document.querySelector(".hoodies")
 const prenda2 = document.querySelector(".shirts")
 const prenda3 = document.querySelector(".sweatshirts")
-const caja = document.querySelector(".cart-container")
-const contenedorDeProductos = document.getElementById(".productos-content")
-let carrito = []
+let allcontainerCard = document.querySelector(".productos-card")
+let containerBuyCart = document.querySelector(".cart-container")
+let buyThings = []
+
 closeBtn.addEventListener("click", (e) => {
     close.classList.add("close")
 })
@@ -16,31 +17,68 @@ eliminarclose.addEventListener("click", (e => {
     close.classList.remove("close")
 }))
 
-prenda1.addEventListener("click", (e) =>{
+    loadEventListenrs()
+function loadEventListenrs(){
+    allcontainerCard.addEventListener("click", addproduct);
+}
+
+function addproduct(e){
+    e.preventDefault();
+    if(e.target.classList.contains("productorbuttona")){
+        const selectproduct = e.target.parentElement;
+        readThecontent(selectproduct);
+       // console.log(e.target.parentElement);
+    }
     
-})
+}
 
-console.log(contenedorDeProductos)
-const element = caja.map((task) =>{
-    return
-    ` <article>
-    <div class="producto-ropa">
-        <img class="producto-img" src="https://academlo-store.netlify.app/assets/img/featured1.png" alt="Hoodies">
-    </div>
-    <div>
-        <h2 class="producto-price">$14.00 <span class="producto-cantidad">| Stock: 10</span></h2>
-        <h3 class="producto-name">Hoodies</h3>
-        <button class="productor-button">
-            <i class="fa-solid fa-plus hoodies" id="1"></i>
-        </button>
-    </div>
-</article>  ` 
-})
+function readThecontent(product){
+    const infoproduct = {
+        image: product.querySelector("div img").src,
+        title: product.querySelector(".producto-name").textContent,
+        price: product.querySelector(".producto-price2").textContent,
+        id: product.querySelector("button i").getAttribute("id"),
+        amount: 1
+    }
 
+    buyThings = [...buyThings, infoproduct]
+    loadHTML();
 
+    console.log(infoproduct);
+}
 
+function loadHTML(){
+    buyThings.forEach(product => {
+        const {image, title, price, id, amount} = product;
+        const row = document.createElement("div");
+        row.classList.add("item");
+        row.innerHTML = `
+        <article class="cart--card">
+                <div class="cart-box">
+                    <img class="cart-img-box" src="${image}"
+                <div class="cart-details">
+                    <h3 class="cart-title-h3">${title}</h3>
+                    <span class="cart-stock">stock: 10 | </div>
+                    <span class="cart-subtotal">Subtotal: ${price}</span>
+                    <div class="cart-amount">
+                        <div class="cart-amount-content">
+                            <span class="cart-amount-box minus">
+                                <i class="fa-solid fa-minus"></i>
+                            </span>
+                            <span class="cart-amount-number">${amount} units</span>
+                            <span class="cart-amount-box plus">
+                                <i class="fa-regular fa-plus" id="${id}"></i>
+                            </span>
+                        </div>
+                        <i class="fa-regular fa-trash-can cart-trash"></i>
+                    </div>
+                </div>
+            </article>`;
 
-
+            containerBuyCart.appendChild(row);
+    });
+}
+    
 
 
 
