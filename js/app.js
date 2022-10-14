@@ -7,7 +7,10 @@ const prenda2 = document.querySelector(".shirts")
 const prenda3 = document.querySelector(".sweatshirts")
 let allcontainerCard = document.querySelector(".productos-card")
 let containerBuyCart = document.querySelector(".cart-container")
-let buyThings = []
+let pricetotal = document.querySelector(".cart-price-total")
+
+let buyThings = [];
+let totalcard = 0;
 
 closeBtn.addEventListener("click", (e) => {
     close.classList.add("close")
@@ -48,6 +51,9 @@ function readThecontent(product){
         id: product.querySelector("button i").getAttribute("id"),
         amount: 1
     }
+
+    totalcard = totalcard + infoproduct.price;
+
 
     const exist = buyThings.some(product => product.id === infoproduct.id)
     if(exist){
@@ -98,6 +104,9 @@ function loadHTML(){
             </article>`;
 
             containerBuyCart.appendChild(row);
+
+            pricetotal.innerHTML = totalcard;
     });
 }
-function clearHtml(){containerBuyCart.innerHTML ="";}
+function clearHtml(){
+    containerBuyCart.innerHTML ="";}
