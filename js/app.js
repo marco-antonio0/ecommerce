@@ -20,6 +20,8 @@ eliminarclose.addEventListener("click", (e => {
     loadEventListenrs()
 function loadEventListenrs(){
     allcontainerCard.addEventListener("click", addproduct);
+
+    containerBuyCart.addEventListener("click", deleteProduct);
 }
 
 function addproduct(e){
@@ -31,7 +33,13 @@ function addproduct(e){
     }
     
 }
-
+function deleteProduct(e) {
+    if(e.target.classList.contains(".cart-trash")){
+        const deleteId = e.target.getAttribute("id");
+        buyThings = buyThings.filter(product => product.id !== deleteId)
+    }
+    loadHtml();
+}
 function readThecontent(product){
     const infoproduct = {
         image: product.querySelector("div img").src,
@@ -57,9 +65,9 @@ function loadHTML(){
         <article class="cart--card">
                 <div class="cart-box">
                     <img class="cart-img-box" src="${image}"
-                <div class="cart-details">
+                    <div class="cart-details">
                     <h3 class="cart-title-h3">${title}</h3>
-                    <span class="cart-stock">stock: 10 | </div>
+                    </div>
                     <span class="cart-subtotal">Subtotal: ${price}</span>
                     <div class="cart-amount">
                         <div class="cart-amount-content">
@@ -68,10 +76,12 @@ function loadHTML(){
                             </span>
                             <span class="cart-amount-number">${amount} units</span>
                             <span class="cart-amount-box plus">
-                                <i class="fa-regular fa-plus" id="${id}"></i>
+                                    <i class="fa-regular fa-plus" id="${id}"></i>
                             </span>
                         </div>
-                        <i class="fa-regular fa-trash-can cart-trash"></i>
+                        <button>
+                            <i class="fa-regular fa-trash-can cart-trash"></i> 
+                        </button
                     </div>
                 </div>
             </article>`;
@@ -79,46 +89,4 @@ function loadHTML(){
             containerBuyCart.appendChild(row);
     });
 }
-function clearHtml(){
-    containerBuyCart.innerHTML = "";
-}
-
-
-
-
-/*
-
-stockproductos.forEach((producto) =>{
-    const div = document.createElement("div")
-    div.classList.add(".producto")
-    div.innerHTML = 
-    `   <div class="producto-ropa">
-           <img class="producto-img" src="${producto.img}" alt="${producto.nombre}">
-        </div>
-        <div>
-            <h2 class="producto-price">${producto.precio}<span class="producto-cantidad">| ${producto.cantidad}</span></h2>
-            <h3 class="producto-name"> ${producto.nombre}</h3>
-            <button class="productor-button" id="agregar${producto.id}">
-                <i class="fa-solid fa-plus hoodies" ></i>
-            </button>
-        </div>`
-    contenedorDeProductos.appendChild(div)
-
-    const boton = document.getElementById("agregar${producto.id}")
-
-   
-})
- boton.addEventListener("click", () =>{
-        agregarAlCarrito(producto.id)
-    })
-
-
-const agregarAlCarrito = (prodId) => {
-    const item = stockproductos.find((prod) => prod.id === prodId)
-    carrito.push(item)
-    console.log(carrito)
-}
-*/
-
-
-
+function clearHtml(){containerBuyCart.innerHTML ="";}
