@@ -49,10 +49,21 @@ function readThecontent(product){
         amount: 1
     }
 
-    buyThings = [...buyThings, infoproduct]
+    const exist = buyThings.some(product => product.id === infoproduct.id)
+    if(exist){
+        const pro = buyThings.map(product => {
+            if(product.id === infoproduct.id){
+                product.amount++;
+                return product
+            } else {
+                return product
+            }
+        });
+        buyThings = [...pro];
+    } else{
+        buyThings = [...buyThings, infoproduct]
+    }
     loadHTML();
-
-    console.log(infoproduct);
 }
 
 function loadHTML(){
